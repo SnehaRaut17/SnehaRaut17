@@ -1,16 +1,26 @@
-## Hi there 👋
+# 🔢 Sudoku Solver (Console-Based)
 
-<!--
-**SnehaRaut17/SnehaRaut17** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+A C++ program that solves any valid 9x9 Sudoku puzzle using the **backtracking algorithm**. Designed for terminal/console use and optimized with constraint checks for rows, columns, and 3x3 boxes.
 
-Here are some ideas to get you started:
+---
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+## ✅ Features
+- Takes user input via terminal
+- Efficient backtracking solution
+- Handles invalid or unsolvable boards
+- Clean and minimal code structure
+
+---
+
+## 🧠 Algorithm
+Uses recursive backtracking:
+- Try placing 1 to 9 in each empty cell
+- Check if placing number is valid in row, column, and 3x3 box
+- Backtrack when stuck
+
+---
+
+## 📥 Input Format
+Enter a 9x9 Sudoku puzzle as input:
+- Use **0** to represent empty cells
+- One row per line with 9 integers separated by spaces
