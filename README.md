@@ -24,3 +24,12 @@ Uses recursive backtracking:
 Enter a 9x9 Sudoku puzzle as input:
 - Use **0** to represent empty cells
 - One row per line with 9 integers separated by spaces
+
+---
+
+## ▶️ How to Run
+
+### Compile and Run (using g++):
+```bash
+g++ Sudoku_Solver.cpp -o sudoku_solver
+./sudoku_solver
