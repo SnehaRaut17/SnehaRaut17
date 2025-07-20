@@ -1,60 +1,48 @@
-// Create 9x9 grid of input fields
+// Create 9x9 input grid dynamically
 const grid = document.getElementById("sudoku-grid");
 
-for (let row = 0; row < 9; row++) {
-  for (let col = 0; col < 9; col++) {
+for (let i = 0; i < 9; i++) {
+  for (let j = 0; j < 9; j++) {
     const input = document.createElement("input");
     input.setAttribute("type", "number");
     input.setAttribute("min", "1");
     input.setAttribute("max", "9");
-    input.setAttribute("id", `cell-${row}-${col}`);
+    input.setAttribute("id", `cell-${i}-${j}`);
     grid.appendChild(input);
   }
 }
 
-// Get board from inputs
 function getBoard() {
   const board = [];
   for (let i = 0; i < 9; i++) {
-    board[i] = [];
+    const row = [];
     for (let j = 0; j < 9; j++) {
-      const val = document.getElementById(`cell-${i}-${j}`).value;
-      board[i][j] = val === "" ? 0 : parseInt(val);
+      const val = parseInt(document.getElementById(`cell-${i}-${j}`).value);
+      row.push(isNaN(val) ? 0 : val);
     }
+    board.push(row);
   }
   return board;
 }
 
-// Set board to UI
-function setBoard(board) {
+function updateUI(board) {
   for (let i = 0; i < 9; i++) {
     for (let j = 0; j < 9; j++) {
-      document.getElementById(`cell-${i}-${j}`).value =
-        board[i][j] === 0 ? "" : board[i][j];
+      document.getElementById(`cell-${i}-${j}`).value = board[i][j];
     }
   }
 }
 
-// Validate if number is allowed
 function isValid(board, row, col, num) {
   for (let i = 0; i < 9; i++) {
-    if (board[row][i] === num || board[i][col] === num)
-      return false;
+    if (board[row][i] === num || board[i][col] === num) return false;
+    const boxRow = 3 * Math.floor(row / 3) + Math.floor(i / 3);
+    const boxCol = 3 * Math.floor(col / 3) + i % 3;
+    if (board[boxRow][boxCol] === num) return false;
   }
-
-  const boxRow = row - (row % 3);
-  const boxCol = col - (col % 3);
-  for (let i = 0; i < 3; i++) {
-    for (let j = 0; j < 3; j++) {
-      if (board[boxRow + i][boxCol + j] === num)
-        return false;
-    }
-  }
-
   return true;
 }
 
-// Backtracking solve function
 function solveSudoku(board) {
   for (let row = 0; row < 9; row++) {
     for (let col = 0; col < 9; col++) {
@@ -73,20 +61,19 @@ function solveSudoku(board) {
   return true;
 }
 
-// Button click handler
 function solve() {
   const board = getBoard();
   if (solveSudoku(board)) {
-    setBoard(board);
-    alert("Solved Successfully! ✅");
+    updateUI(board);
   } else {
-    alert("No solution exists! ❌");
+    alert("No solution found!");
   }
 }
 
-// Clear the grid
-function clearGrid() {
-  for (let i = 0; i < 9; i++)
-    for (let j = 0; j < 9; j++)
+function clearBoard() {
+  for (let i = 0; i < 9; i++) {
+    for (let j = 0; j < 9; j++) {
       document.getElementById(`cell-${i}-${j}`).value = "";
+    }
+  }
 }
