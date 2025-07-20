@@ -1,17 +1,18 @@
-// Create grid inputs
+// Create 9x9 grid of input fields
 const grid = document.getElementById("sudoku-grid");
 
-for (let i = 0; i < 81; i++) {
-  const input = document.createElement("input");
-  input.setAttribute("type", "number");
-  input.setAttribute("min", 1);
-  input.setAttribute("max", 9);
-  input.setAttribute("maxlength", 1);
-  input.id = `cell-${Math.floor(i / 9)}-${i % 9}`;
-  grid.appendChild(input);
+for (let row = 0; row < 9; row++) {
+  for (let col = 0; col < 9; col++) {
+    const input = document.createElement("input");
+    input.setAttribute("type", "number");
+    input.setAttribute("min", "1");
+    input.setAttribute("max", "9");
+    input.setAttribute("id", `cell-${row}-${col}`);
+    grid.appendChild(input);
+  }
 }
 
-// Get board from input
+// Get board from inputs
 function getBoard() {
   const board = [];
   for (let i = 0; i < 9; i++) {
@@ -34,7 +35,7 @@ function setBoard(board) {
   }
 }
 
-// Check if placing num is valid
+// Validate if number is allowed
 function isValid(board, row, col, num) {
   for (let i = 0; i < 9; i++) {
     if (board[row][i] === num || board[i][col] === num)
@@ -49,10 +50,11 @@ function isValid(board, row, col, num) {
         return false;
     }
   }
+
   return true;
 }
 
-// Backtracking Solver
+// Backtracking solve function
 function solveSudoku(board) {
   for (let row = 0; row < 9; row++) {
     for (let col = 0; col < 9; col++) {
@@ -71,19 +73,18 @@ function solveSudoku(board) {
   return true;
 }
 
-// Solve button action
+// Button click handler
 function solve() {
   const board = getBoard();
-  const success = solveSudoku(board);
-  if (success) {
+  if (solveSudoku(board)) {
     setBoard(board);
-    alert("Solved Successfully!");
+    alert("Solved Successfully! ✅");
   } else {
-    alert("No solution exists.");
+    alert("No solution exists! ❌");
   }
 }
 
-// Clear button action
+// Clear the grid
 function clearGrid() {
   for (let i = 0; i < 9; i++)
     for (let j = 0; j < 9; j++)
